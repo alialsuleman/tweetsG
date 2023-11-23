@@ -551,7 +551,7 @@ var fs = require("fs");
     })
     app.all("/countries/:id", async (req, res) => {
         cnt++;
-        console.log('started');
+        console.log('countries');
         let g1 = new Graph();
         g1.createGraph();
         g1.dfs('CO' + req.params.id);
@@ -561,7 +561,7 @@ var fs = require("fs");
     })
     app.all("/states/:id", async (req, res) => {
         cnt++;
-        console.log('started');
+        console.log('states');
         let g2 = new Graph();
         g2.createGraph();
         g2.dfs('ST' + req.params.id);
@@ -570,7 +570,7 @@ var fs = require("fs");
     })
     app.all("/cities/:id", async (req, res) => {
         cnt++;
-        console.log('started');
+        console.log('cities');
         let g3 = new Graph();
         g3.createGraph();
         g3.dfs('CI' + req.params.id);
