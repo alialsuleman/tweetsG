@@ -135,6 +135,22 @@ patterns[2] = [
 
 
 let eventt = [];
+
+let countries = new Array();
+let states = new Array();
+let cities = new Array();
+const countriesIdToName = new Map();
+const countriesNameToId = new Map();
+const statesIdToName = new Map();
+const statesNameToId = new Map();
+const citiesIdToName = new Map();
+const citiesNameToId = new Map();
+const stateParent = new Map();
+const cityParent = new Map();
+
+
+
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -152,6 +168,52 @@ class Graph {
 
     addVertex(v) {
         this.AdjList.set(v, []);
+    }
+    createGraph() {
+
+        this.addVertex('ROOT');
+
+        for (let h of countries) {
+            //
+            if (h.id == '') break;
+            if (!h.name) break;
+            //console.log(h);
+            h.name = h.name.toLowerCase();
+            this.addVertex('CO' + h.name);
+        }
+        for (let h of states) {
+
+            if (h.id == '') break;
+            ///  console.log(h);
+            h.name = h.name.toLowerCase();
+            this.addVertex('ST' + h.name);
+        }
+        for (let h of cities) {
+            // console.log(h);
+            if (h.id == '') break;
+            if (!h.name) break;
+            h.name = h.name.toLowerCase();
+            this.addVertex('CI' + h.name);
+
+        }
+
+
+        for (let h of countries) {
+            if (h.id == '') break;
+            this.addEdge('ROOT', 'CO' + h.name);
+        }
+        for (let h of states) {
+            if (h.id == '') break;
+            // console.log(h);
+            const country = 'CO' + countriesIdToName[h.country_id];
+            this.addEdge(country, 'ST' + h.name);
+            //   console.log(country + ' ' + 'ST' + h.name)
+        }
+        for (let h of cities) {
+            if (h.id == '') break;
+            const state = 'ST' + statesIdToName[h.state_id];
+            this.addEdge(state, 'CI' + h.name);
+        }
     }
     addEdge(v, w) {
         // console.log(w + ' ' + v);
@@ -242,7 +304,7 @@ var fs = require("fs");
     // }
 
     let xxx = fs.readFileSync("countries.txt").toString().split('\n');
-    let countries = new Array();
+
     for (let x of xxx) {
         let o = x.split(' ');
         let r = {
@@ -256,7 +318,7 @@ var fs = require("fs");
     }
 
     xxx = fs.readFileSync("states.txt").toString().split('\n');
-    let states = new Array();
+
     for (let x of xxx) {
         let o = x.split(' ');
         // console.log(o);
@@ -271,7 +333,7 @@ var fs = require("fs");
         states.push(r);
     }
     xxx = fs.readFileSync("cities.txt").toString().split('\n');
-    cities = new Array();
+
     for (let x of xxx) {
         let o = x.split(' ');
         let r = {
@@ -292,16 +354,6 @@ var fs = require("fs");
 
 
 
-
-
-    const countriesIdToName = new Map();
-    const countriesNameToId = new Map();
-    const statesIdToName = new Map();
-    const statesNameToId = new Map();
-    const citiesIdToName = new Map();
-    const citiesNameToId = new Map();
-    const stateParent = new Map();
-    const cityParent = new Map();
 
     //console.log(countries); // id , name ;
     //console.log(states);//  { id: 51, name: 'Northern', country_id: 83 },
@@ -365,7 +417,7 @@ var fs = require("fs");
         g.addEdge(state, 'CI' + h.name);
     }
     const numOfLeave = cities.length;
-    console.log(numOfLeave);
+    //console.log(numOfLeave);
 
     //console.log(citiesIdToName[getRandomInt(1, 127617)]);
 
@@ -500,20 +552,31 @@ var fs = require("fs");
     app.all("/countries/:id", async (req, res) => {
         cnt++;
         console.log('started');
-        g.dfs('CO' + req.params.id);
-        res.send({ cnt: cnt, rows: g.ans });
+        let g1 = new Graph();
+        g1.createGraph();
+        g1.dfs('CO' + req.params.id);
+        res.send({ cnt: cnt, rows: g1.ans });
+        delete g1;
+
     })
     app.all("/states/:id", async (req, res) => {
         cnt++;
         console.log('started');
-        g.dfs('ST' + req.params.id);
+        let g2 = new Graph();
+        g2.createGraph();
+        g2.dfs('ST' + req.params.id);
         res.send({ cnt: cnt, rows: g.ans });
+        delete g2;
     })
     app.all("/cities/:id", async (req, res) => {
         cnt++;
         console.log('started');
-        g.dfs('CI' + req.params.id);
+        let g3 = new Graph();
+        g3.createGraph();
+        g3.dfs('CI' + req.params.id);
         res.send({ cnt: cnt, rows: g.ans });
+        delete g3;
+
     })
 
     app.listen(3000, () => {
