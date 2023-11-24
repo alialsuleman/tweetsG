@@ -543,7 +543,9 @@ var fs = require("fs");
 
 
     app.get('/', (req, res) => {
+        cnt++;
         res.send({
+            cnt,
             event: {
                 t1, t2, t3, t4
             }
@@ -552,30 +554,30 @@ var fs = require("fs");
     app.all("/countries/:id", async (req, res) => {
         cnt++;
         console.log('countries');
-        let g1 = new Graph();
-        g1.createGraph();
-        g1.dfs('CO' + req.params.id);
-        res.send({ cnt: cnt, rows: g1.ans });
-        delete g1;
+        req.g1 = new Graph();
+        req.g1.createGraph();
+        req.g1.dfs('CO' + req.params.id);
+        res.send({ cnt: cnt, rows: req.g1.ans });
+        //delete g1;
 
     })
     app.all("/states/:id", async (req, res) => {
         cnt++;
         console.log('states');
-        let g2 = new Graph();
-        g2.createGraph();
-        g2.dfs('ST' + req.params.id);
-        res.send({ cnt: cnt, rows: g.ans });
-        delete g2;
+        req.g2 = new Graph();
+        req.g2.createGraph();
+        req.g2.dfs('ST' + req.params.id);
+        res.send({ cnt: cnt, rows: req.g2.ans });
+        //delete g2;
     })
     app.all("/cities/:id", async (req, res) => {
         cnt++;
         console.log('cities');
         let g3 = new Graph();
-        g3.createGraph();
-        g3.dfs('CI' + req.params.id);
-        res.send({ cnt: cnt, rows: g.ans });
-        delete g3;
+        req.g3.createGraph();
+        req.g3.dfs('CI' + req.params.id);
+        res.send({ cnt: cnt, rows: req.g3.ans });
+        //delete g3;
 
     })
 
