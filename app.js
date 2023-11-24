@@ -439,8 +439,8 @@ var fs = require("fs");
             console.log(cityParent[t1.city]);
             t1.state = cityParent[t1.city];
             t1.countery = stateParent[t1.state];
-            t1.degree = getRandomInt(0, 2);
-            t1.time = getRandomInt(300000, 1800000);
+            t1.degree = Math.min(getRandomInt(0, 3), 2);
+            t1.time = getRandomInt(3000000, 18000000);
             eventt['CI' + t1.city] = new Array()
         }
         eventt['CI' + t1.city] = new Array();
@@ -456,8 +456,8 @@ var fs = require("fs");
             eventt['CI' + t1.city].push(T);
         }
         //console.log(eventt[t1.city] + ' ' + t1.city)
-        t1.time -= 30000;
-    }, 1000)
+        t1.time -= 10000;
+    }, 10000)
 
 
 
@@ -468,8 +468,8 @@ var fs = require("fs");
             t2.city = citiesIdToName[getRandomInt(1, 127617)];
             t2.state = cityParent[t2.city];
             t2.countery = stateParent[t2.state];
-            t2.degree = getRandomInt(0, 2);
-            t2.time = getRandomInt(300000, 1800000);
+            t2.degree = Math.min(getRandomInt(0, 3), 2);
+            t2.time = getRandomInt(3000000, 18000000);
             eventt['CI' + t2.city] = new Array()
 
         }
@@ -486,16 +486,18 @@ var fs = require("fs");
             eventt['CI' + t2.city].push(T);
         }
 
-        t2.time -= 30000;
-    }, 1000)
+        t2.time -= 10000;
+    }, 10000)
+
+
     setInterval(() => {
         if (t3.time <= 0) {
             eventt[t3.city] = new Array()
             t3.city = citiesIdToName[getRandomInt(1, 127617)];
             t3.state = cityParent[t3.city];
             t3.countery = stateParent[t3.state];
-            t3.degree = getRandomInt(0, 2);
-            t3.time = getRandomInt(300000, 1800000);
+            t3.degree = Math.min(getRandomInt(0, 3), 2);
+            t3.time = getRandomInt(3000000, 18000000);
             eventt['CI' + t3.city] = new Array()
         }
         eventt['CI' + t3.city] = new Array();
@@ -509,16 +511,16 @@ var fs = require("fs");
             // console.log(T);
             eventt['CI' + t3.city].push(T);
         }
-        t3.time -= 30000;
-    }, 1000)
+        t3.time -= 10000;
+    }, 10000)
     setInterval(() => {
         if (t4.time <= 0) {
             eventt[t4.city] = new Array()
             t4.city = citiesIdToName[getRandomInt(1, 127617)];
             t4.state = cityParent[t4.city];
             t4.countery = stateParent[t4.state];
-            t4.degree = getRandomInt(0, 2);
-            t4.time = getRandomInt(300000, 1800000);
+            t4.degree = Math.min(getRandomInt(0, 3), 2);
+            t4.time = getRandomInt(3000000, 18000000);
             eventt['CI' + t4.city] = new Array()
         }
         eventt['CI' + t4.city] = new Array();
@@ -534,8 +536,8 @@ var fs = require("fs");
             eventt['CI' + t4.city].push(T);
         }
 
-        t4.time -= 30000;
-    }, 1000)
+        t4.time -= 10000;
+    }, 10000)
 
 
 
