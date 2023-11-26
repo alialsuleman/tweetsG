@@ -433,10 +433,8 @@ var fs = require("fs");
 
         if (t1.time <= 0) {
             // eventt[t1.city] = [];
-
+            eventt[t1.city] = new Array()
             t1.city = citiesIdToName[getRandomInt(1, 127617) - 1];
-            //  t1.city = 'homs'
-            console.log(cityParent[t1.city]);
             t1.state = cityParent[t1.city];
             t1.countery = stateParent[t1.state];
             t1.degree = Math.min(getRandomInt(0, 3), 2);
